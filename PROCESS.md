@@ -1,70 +1,67 @@
 # Process overview
 
-<!-- TEMPLATE: this file is a shape to fill in, not a form. Replace everything
-     in it with your own overview, and delete this comment — `pnpm
-     check:evidence` will remind you if it's still here. -->
-
-A reading-guide to how the work came together --- a map to your process, not an
-essay about it. Markers read this file and follow its citations; they don't
-trawl the repo for evidence you didn't point at, so if a moment mattered, cite
-it.
-
-This file is the shape; the course site's
-[assessment page](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/topics/assessment/#what-you-submit)
-is the requirement, and its
-[word counts](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/topics/assessment/#word-counts)
-cover every deliverable.
-
 ## What I built
 
-One paragraph: the thing, and the idea behind it.
+**Deflect** is a small browser game where the player draws lines to bounce a moving ball into a goal.
+
+The ball keeps moving by itself, so the player cannot directly control it. Instead, the player changes its path by drawing lines for it to bounce from.
+
+The final game has 16 levels. Early levels introduce simple bouncing and different angles. Later levels add fixed obstacles, limited ink, moving obstacles, longer routes, and more chances to recover from a bad bounce.
+
+The game has no tutorial. The first levels are simple enough for the player to learn by trying.
+
+It also has pause, restart, level select, an opening cover, and a brush cursor. Finishing Level 16 shows a `CONGRATULATIONS` animation with confetti and ends the game.
 
 ## The moments that mattered
 
-Three or four for an assignment; fewer is fine for a weekly prototype. Keep the
-list short so each moment has room to do all four jobs:
+### 1. Moving away from the viewport idea
 
-1. **what happened** --- the problem, or the thing that went wrong
-2. **what you did instead of the obvious thing** --- the call you made, and why
-   it beat the obvious one
-3. **how you knew it was right** --- the check you ran, the viewport you looked
-   at, what you read before accepting the diff
-4. **the citation** --- a commit or commit range, a `CLAUDE.md` change, a check
-   that went from red to green, a prompt paired with the commit it produced
+My first idea was a more meta browser game. The game world was larger than the screen, and the player could move the viewport with scrollbars or the keyboard.
 
-Jobs 2 and 3 are the ones the repo can't tell a reader on its own, so they're
-where the marks are. The strongest moments are the ones where a correction
-landed in the **harness** --- the standards and checks your work has to satisfy
---- rather than in a retry: a rule added to `CLAUDE.md`, a check wired up, an
-attempt thrown away. Retrying until it passes is the routine case, and changing
-what the work runs against is the skilled one.
+I liked the idea of using the browser itself as part of the game, but it was very confusing when I tried it. It was not clear what the player was supposed to do, and some rules also behaved strangely when the browser was zoomed.
 
-Cite each moment as a link whose text is the commit hash or range and whose
-target is this repo's commit or compare URL, so a reader clicks straight to the
-evidence:
+I tried fixing the rules, but the main problem was still there: the game needed too much explanation. That did not fit the no-tutorial requirement.
 
-- one commit: [`a1b2c3d`](https://github.com/YOUR-ORG/YOUR-REPO/commit/a1b2c3d)
-- a range:
-  [`a1b2c3d...e4f5a6b`](https://github.com/YOUR-ORG/YOUR-REPO/compare/a1b2c3d...e4f5a6b)
+I therefore dropped this idea and started again.
 
-To pair a prompt with the commit it produced, quote the prompt (curated, not a
-full transcript) next to the citation:
+The next idea used the mouse as a light source. Moving the mouse changed a shadow, and the player had to use the shadow to cover a target.
 
-> the prompt, verbatim
+This was much easier to understand, but after making three levels I found that the whole game could be finished in about ten seconds. The interaction worked, but there was not enough to learn or improve at.
 
-Screenshots are welcome where one carries the verification better than a
-sentence does. Commit the file to this repo and link it with a **relative**
-path, which is what makes it render on GitHub: `![alt text](docs/before.png)`.
-Images don't count towards the word count and don't replace the citation.
+That made me change direction again instead of adding more similar levels.
 
-## Before you ship
+### 2. Finding the final draw-and-bounce mechanic
 
-`pnpm check:evidence` verifies your citations resolve to real commits, that a
-reflection entry the marker reads is in `reflections/`, and that your
-`CLAUDE.md` is there --- before a marker ever opens the file. It checks that
-your map is traceable, not that it is good: the marker judges whether your
-small, deliberately chosen set of moments shows real judgement and reflection. A
-green check is not a substitute for that curation.
+The final direction came from the idea of drawing something that changes a moving object's path.
 
-Images aren't checked: unlike a citation whose SHA doesn't resolve, a broken
-image is visible the moment this file is rendered on GitHub.
+The player draws a line, the ball hits it, and the line changes the direction of the ball. This was simple enough to understand without instructions, but it also gave me much more room to make different levels.
+
+I first made simple levels about bounce angles, then added obstacles, limited ink, multiple bounces, moving obstacles, and longer routes.
+
+Playing the game also changed the design. For example, the ball originally did not bounce high enough, so I adjusted the physics. After that it felt too slow and floaty, so I made it move a little faster.
+
+I also found some levels where the ball could reach the goal without the player doing anything. I moved the goals and obstacles so the player actually had to use the drawing mechanic.
+
+Later, I stopped making the ink limit harder. Instead, I used more interesting obstacle layouts and moving obstacles. This gave the player more freedom to draw another line and save the ball after a bad bounce.
+
+After testing the whole game, I found that it could still be finished quite quickly, so I extended it to 16 levels. The last levels combine the same mechanics instead of introducing completely new rules.
+
+## Testing the final game
+
+I used automated testing for one clear physics rule: how the ball reflects when it hits a drawn line.
+
+For the rest, playing the game was more useful.
+
+I played it to check things such as:
+
+- whether the first move was understandable without instructions;
+- whether the ball felt good to control;
+- whether a level could accidentally finish without player input;
+- whether obstacles felt fair;
+- whether moving obstacles were readable;
+- whether there was enough space to recover from a bad bounce;
+- whether the whole game was long enough without becoming repetitive.
+
+I also checked the game at the two marking sizes, 1920×1080 and 390×844.
+
+The automated test checks that the rule works. Playing the game helped me decide whether that rule actually felt good to use.
