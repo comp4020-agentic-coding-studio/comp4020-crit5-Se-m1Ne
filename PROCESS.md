@@ -14,6 +14,10 @@ It also has pause, restart, level select, an opening cover, and a brush cursor. 
 
 ## The moments that mattered
 
+Everything below was iterated locally before landing in a single commit,
+[`787ad89`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-Se-m1Ne/commit/787ad89712fa0174e41851fb88cbb3e174a5d9c3),
+on top of the template's [`2e7ff14`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit5-Se-m1Ne/commit/2e7ff14) initial commit. The moments themselves aren't split across separate commits — this section is a narrative account of that one commit's history, not a commit-by-commit log.
+
 ### 1. Moving away from the viewport idea
 
 My first idea was a more meta browser game. The game world was larger than the screen, and the player could move the viewport with scrollbars or the keyboard.
